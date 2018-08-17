@@ -1,0 +1,12 @@
+public function extract() { 
+
+    // log onto remote server and extract enquiries
+
+    $production_enquiries = \DB::connection('proddb')->select('select * from wp_enquiries');
+
+    // enumerate the returned enquiries and store these into local database foreach($production_enquiries as $enquiry){ \DB::table('enquiries') ->insert(array( 'enquiry_group_id'=> $enquiry ->enquiry_group_id, 'enquiry_newsletter_subscription'=> $enquiry ->enquiry_newsletter_subscription, . . update more fields . 'created_at' => \Carbon\Carbon::now(), # \Datetime() 'updated_at' => \Carbon\Carbon::now() # \Datetime() ) ); } \DB::connection('proddb')->disconnect();
+
+    $enquiries = \DB::table('enquiries')->orderBy('enquiry_group_id', 'asc')->paginate(1);
+
+    return view('enquiries.index', compact('enquiries')); 
+    }
